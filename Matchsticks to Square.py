@@ -1,5 +1,10 @@
 class Solution:
     def makesquare(self, nums: List[int]) -> bool:
+        #Approach: Backtracking
+        #Time Complexity: O(4^n)
+        #Space Complexity: O(n)
+        #where, n is the length of nums // total number of matchsticks
+        
         self.total = sum(nums)
         self.sides = [0, 0, 0, 0]
         self.result = False
