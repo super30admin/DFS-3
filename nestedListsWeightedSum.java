@@ -1,6 +1,7 @@
 /**
- * Problem: https://leetcode.com/problems/nested-list-weight-sum/
- *
+Problem: https://leetcode.com/problems/nested-list-weight-sum/
+*/
+/**
  * // This is the interface that allows for creating nested lists.
  * // You should not implement it, or speculate about its implementation
  * public interface NestedInteger {
@@ -29,20 +30,22 @@
  * }
  */
 class Solution {
-    int result;
+    int result = 0;
     public int depthSum(List<NestedInteger> nestedList) {
-        result = 0;
-        depthSum(nestedList, 1);
+        if (nestedList != null && nestedList.size() > 0) {
+            helper(nestedList, 1);
+        }
         return result;
     }
     
-    private void depthSum(List<NestedInteger> nestedList, int depth) {
+    public void helper(List<NestedInteger> nestedList, int depth) {
+        if (nestedList.isEmpty()) return;
         
         for (int i = 0; i < nestedList.size(); ++i) {
             if (nestedList.get(i).isInteger()) {
-                result = result + (nestedList.get(i).getInteger() * depth);
+                result = result + nestedList.get(i).getInteger() * depth;
             } else {
-                depthSum(nestedList.get(i).getList(), depth + 1);
+                helper(nestedList.get(i).getList(), depth + 1);
             }
         }
     }
