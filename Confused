@@ -1,0 +1,51 @@
+//TimeComplexity.  O(5^k)
+//SpaceComplexity. O(1)
+
+
+class Solution {
+    int count = 0;
+    HashMap<Integer,Integer> map;
+    public int confusingNumberII(int n) {
+        //n = 10
+        map   = new HashMap<>();
+        map.put(0,0);
+        map.put(1,1);
+        map.put(6,9);
+        map.put(8,8);
+        map.put(9,6);
+
+        dfs(0,n);
+        return count;
+
+    }
+
+    public void dfs(long currNum, int n){
+        if(currNum > n)return;
+
+        if(confused(currNum)){
+            count++;
+        }
+
+        for(int key : map.keySet()){
+
+            long newNum = currNum * 10 + key;
+            if(newNum == 0)continue;
+            dfs(newNum,n);
+        }
+    }
+
+    public boolean confused(long num){
+
+        long temp = num;
+        long res = 0;
+        while(num > 0){
+        int n = (int)num%10;    
+        res = res*10 + map.get(n);
+        num = num/10;
+        }
+        if(res != temp){
+            return true;
+        }
+        return false;
+    }
+}
