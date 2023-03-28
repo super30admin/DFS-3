@@ -1,0 +1,31 @@
+class Solution:
+    def makesquare(self, matchsticks: List[int]) -> bool:
+        if len(matchsticks) < 4:
+            return False
+        s, r = divmod(sum(matchsticks), 4)
+        if r != 0:
+            return False
+        if max(matchsticks) > s:
+            return False
+        return self.p(matchsticks, 4, s)
+    
+    def p(self, nums, k, target):
+        buckets = [0] * k
+        nums.sort(reverse=True)
+        
+        def backtrack(idx):
+            if idx == len(nums):
+                return len(set(buckets)) == 1
+            for b in range(k):
+                buckets[b] += nums[idx]
+                if buckets[b] <= target and backtrack(idx + 1):
+                    return True
+                buckets[b] -= nums[idx]
+                if buckets[b] == 0:
+                    break
+            return False
+        return backtrack(0)
+
+# Time Complexity: O(4^N)
+# Space Complexity: O(1)
+# Successfully implemented on Leetcode
