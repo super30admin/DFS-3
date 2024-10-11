@@ -1,0 +1,33 @@
+T.c --> exponential
+S.c --> O(n)
+
+class Solution {
+    public boolean makesquare(int[] matchsticks) {
+        int sum = 0;
+        for(int i =0; i<matchsticks.length; i++){
+            sum+= matchsticks[i];
+        }
+        if(sum%4 != 0){
+           return false;
+        }
+        int[] square = new int[4];
+        Arrays.sort(matchsticks);
+        return backtrack(matchsticks,square,matchsticks.length-1,sum/4);
+    }
+    public boolean backtrack(int[] matchsticks,int[] square,int index,int side){
+       // base
+       if(index == -1){
+        return true;
+       } 
+
+       //logic
+         for(int i =0; i<square.length; i++){
+            if(square[i]+matchsticks[index] <= side){
+                 square[i] = square[i]+matchsticks[index];
+                 if(backtrack(matchsticks,square,index-1,side))return true;
+                 square[i] = square[i]-matchsticks[index];
+            }
+         }
+        return false;
+    }
+}
