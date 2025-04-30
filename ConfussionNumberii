@@ -1,0 +1,46 @@
+// Time Complexity :O(5^L) length of the digits
+// Space Complexity :O(1)
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+// Your code here along with comments explaining your approach:
+
+// "static void main" must be defined in a public class.
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+        Sample sObj=new Sample();
+        HashMap<Integer,Integer> map=new HashMap<>();//possible confussing numbers
+        map.put(0,0);
+        map.put(1,1);
+        map.put(6,9);
+        map.put(8,8);
+        map.put(9,6);
+       System.out.println(sObj.confuseCheckCount(20,0,map));
+    }
+}
+class Sample {
+    int count;
+   public int confuseCheckCount(int n, long curr, HashMap<Integer, Integer> map) {
+    if (curr > n) return count;//till reach n
+    if ( confusion(curr, map)) {//if confussion then incrementing
+        count++;
+    }
+    for (int digit : map.keySet()) {
+        long newnum = curr * 10 + digit;//forimning new possible confussion from previous confussion numbers itself
+        if (newnum == 0) continue; // Avoid leading zero
+         confuseCheckCount(n, newnum, map);
+    }
+       return count;
+       
+}
+    public boolean confusion(long curr,HashMap<Integer,Integer> map){
+        long temp=curr;
+        long result=0;
+        while(curr > 0){//reversing the newnumber
+            int digit=(int)(curr%10);
+            result = result*10+map.get(digit);
+            curr=curr/10;
+        }
+        return result != temp;//after reversing if it is not the orignal number then its treated as confussion number
+    }
+}
